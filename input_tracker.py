@@ -20,6 +20,7 @@ class InputTrackerApp:
         self.events = []
         self.recording = False
         self.recording_start = 0.0
+        self.window_hidden_for_recording = False
         self.toggle_hotkey = keyboard.Key.f8
         self.save_hotkey = keyboard.Key.f9
         self.hotkey_pressed = False
@@ -185,11 +186,18 @@ class InputTrackerApp:
         self.recording_start = time.time()
         self.status_var.set("Status: recording")
         self.log_queue.put("--- Recording started ---")
+        self.root.withdraw()
+        self.window_hidden_for_recording = True
 
     def stop_recording(self) -> None:
         if not self.recording:
             return
         self.recording = False
+        if self.window_hidden_for_recording:
+            self.root.deiconify()
+            self.root.lift()
+            self.root.focus_force()
+            self.window_hidden_for_recording = False
         self.status_var.set(f"Status: stopped ({len(self.events)} events)")
         self.log_queue.put("--- Recording stopped ---")
 

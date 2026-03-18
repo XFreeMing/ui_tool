@@ -37,6 +37,8 @@ uv run python input_tracker.py
 4. Click `Stop Recording` or press `F8` again.
 5. Click `Save Log` or press `F9` to export.
 
+When recording starts, the app window is automatically hidden and will reappear after stopping.
+
 ## Save location
 
 - Logs are saved automatically to `./log` under the current runtime directory.
